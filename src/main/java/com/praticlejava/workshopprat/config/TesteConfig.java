@@ -52,23 +52,27 @@ public class TesteConfig implements CommandLineRunner{
 		c1.setName("Eletronicos");
 		Category c2 = new Category();
 		c2.setName("Casa");
+		categoriesRepository.saveAll(Arrays.asList(c1, c2));
 		
 		Product p1 = new Product(null, "Computador", 2000, 100, c1);
 		Product p2 = new Product(null, "Copo", 10, 200, c2);
+		productRepository.saveAll(Arrays.asList(p1, p2));
 		
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", date, "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", date, "123456"); 
+		userRepository.saveAll(Arrays.asList(u1, u2));
 		
 		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1, status1);
 		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2, status2);
 		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1, status2);
+		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 		
-		o1.getProducts().add(p1);
-		o1.getProducts().add(p2);
+		o1.getProducts().addAll(Arrays.asList(p1, p2));
 		o2.getProducts().add(p1);
 		
 		c1.getProducts().add(p1);
 		c2.getProducts().add(p2);
+		categoriesRepository.saveAll(Arrays.asList(c1, c2));
 		
 		PaymentMethod pym = PaymentMethod.P1;
 		int soma = 0;
@@ -78,28 +82,12 @@ public class TesteConfig implements CommandLineRunner{
 		}
 		
 		Payment pm1 = new Payment(null, pym, soma, Instant.now()); 
-		
+		paymentRepository.save(pm1);
 		MadePayment mp1 = new MadePayment();
 		mp1.realizarPagamento(pm1);
-	
-		o1.setMadePayment(mp1);
-		
-		List<User> list_user = new ArrayList();
-		list_user.add(u1);
-		list_user.add(u2);
-		
-		List<Order> list_order = new ArrayList();
-		list_order.add(o1);
-		list_order.add(o2);
-		list_order.add(o3);
-		
-		paymentRepository.save(pm1);
 		madePaymentRepository.save(mp1);
-		userRepository.saveAll(list_user);
-		categoriesRepository.saveAll(Arrays.asList(c1, c2));
-		productRepository.saveAll(Arrays.asList(p1, p2));
-		orderRepository.saveAll(list_order);
+		o1.setMadePayment(mp1);	
 		
-		
+		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 	}
 }

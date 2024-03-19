@@ -23,4 +23,20 @@ public class UserServices {
 		Optional<User> obj = userRepository.findById(id);
 		return Optional.ofNullable(obj.get());
 	}
+	
+	public User insert(User user) {
+		return userRepository.save(user);
+	}
+	
+	public User update(Long id, User user) {
+		User us = userRepository.getReferenceById(id);
+		us.setUsername(user.getUsername());
+		us.setEmail(user.getEmail());
+		us.setBirthday(user.getBirthday());
+		return userRepository.save(us);
+	}
+	
+	public void delete(Long id) {
+		userRepository.deleteById(id);
+	}
 }
