@@ -2,12 +2,17 @@ package com.praticlejava.workshopprat.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +27,10 @@ public class User implements Serializable{
 	private String email;
 	private LocalDate birthday;
 	private String password;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList();
 	
 	
 	public User() {
@@ -52,11 +61,12 @@ public class User implements Serializable{
 		return id == other.id;
 	}
 
+	public List<Order> getOrders(){
+		return orders;
+	}
+	
 	public Long getId() {
 		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public String getUsername() {
 		return username;

@@ -1,4 +1,5 @@
 package com.praticlejava.workshopprat.resources;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -9,24 +10,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.praticlejava.workshopprat.entities.User;
-import com.praticlejava.workshopprat.services.UserServices;
+import com.praticlejava.workshopprat.entities.Order;
+import com.praticlejava.workshopprat.services.OrderServices;
 
 @RestController
-@RequestMapping(value = "/user")
-public class UserResource {
+@RequestMapping(value = "/order")
+public class OrderResource {
 	@Autowired
-	private UserServices userService;
+	private OrderServices orderService;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll(){
-		List<User> users = userService.findAll();
-		return ResponseEntity.ok().body(users); 
+	public ResponseEntity<List<Order>> findAll(){
+		List<Order> all_orders = orderService.findAll();
+		return ResponseEntity.ok().body(all_orders);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Optional<User>> findById(@PathVariable Long id){
-		Optional<User> user = userService.findById(id);
-		return ResponseEntity.ok().body(user);
+	public ResponseEntity<Optional<Order>> findById(@PathVariable Long id){
+		Optional<Order> found_order = orderService.findById(id);
+		return ResponseEntity.ok().body(found_order);
 	}
 }
