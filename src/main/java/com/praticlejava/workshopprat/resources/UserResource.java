@@ -29,8 +29,8 @@ public class UserResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Optional<User>> findById(@PathVariable Long id){
-		Optional<User> user = userService.findById(id);
+	public ResponseEntity<User> findById(@PathVariable Long id){
+		User user = userService.findById(id);
 		return ResponseEntity.ok().body(user);
 	}
 	
@@ -42,8 +42,8 @@ public class UserResource {
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user){
-		User us = userService.update(id, user);
-		return ResponseEntity.ok().body(us);
+			User us = userService.update(id, user);
+			return ResponseEntity.ok().body(us);
 	}
 	
 	@DeleteMapping(value = "/{id}")
